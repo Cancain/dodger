@@ -1,20 +1,12 @@
 import * as Phaser from "phaser";
 
-export enum Movement {
-  up = "up",
-  down = "down",
-  left = "left",
-  right = "right",
-  none = "none"
-}
-
 export default class Player {
   size: number;
   movementSpeed: number;
 
   constructor() {
     this.size = 10;
-    this.movementSpeed = 800;
+    this.movementSpeed = 1100;
   }
 
   public model: Phaser.GameObjects.Rectangle & {

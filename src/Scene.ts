@@ -1,5 +1,5 @@
 import * as Phaser from "phaser";
-import Player from "./player";
+import Player from "./Player";
 
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
@@ -7,9 +7,14 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   key: "Game"
 };
 
-export class GameScene extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene {
+  width: number;
+  height: number;
+
   constructor() {
     super(sceneConfig);
+    this.height = 768;
+    this.width = 1024;
   }
 
   playerCharacter = new Player();
@@ -28,24 +33,11 @@ export class GameScene extends Phaser.Scene {
   public update() {
     this.playerCharacter.movement(this);
   }
+
+  public getSize = () => {
+    return {
+      width: this.width,
+      height: this.height
+    };
+  };
 }
-
-const gameConfig: Phaser.Types.Core.GameConfig = {
-  title: "myFirstPhaserGame",
-  type: Phaser.AUTO,
-  width: window.innerWidth,
-  height: window.innerHeight,
-  scene: GameScene,
-
-  physics: {
-    default: "arcade",
-    arcade: {
-      debug: true
-    }
-  },
-
-  parent: "game",
-  backgroundColor: "#000000"
-};
-
-export const game = new Phaser.Game(gameConfig);
