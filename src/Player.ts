@@ -1,14 +1,15 @@
 import * as Phaser from "phaser";
 import { currentScene } from "./Main";
 import { Coordinate } from "./Types";
+import { setInterval } from "timers";
 
 export default class Player {
   size: number;
   movementSpeed: number;
-
+  shootButton: Phaser.Input.Keyboard.Key;
   constructor() {
     this.size = 10;
-    this.movementSpeed = 1100;
+    this.movementSpeed = 500;
   }
 
   public model: Phaser.GameObjects.Rectangle & {
@@ -27,7 +28,31 @@ export default class Player {
     return this.movementSpeed;
   };
 
-  public movement = (scene: Phaser.Scene) => {
+  public shoot = (scene: Phaser.Scene) => {
+    const player = this.model.body;
+    const shootButton = scene.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
+
+    const startPos: Coordinate = { x: player.x, y: player.y };
+
+    if (shootButton.isDown) {
+      let bullet = scene.add.rectangle(
+        startPos.x,
+        startPos.y,
+        10,
+        10,
+        0xffffff
+      ) as any;
+
+      scene.physics.add.existing(bullet);
+      bullet.body.setVelocityX(1000);
+
+      return bullet;
+    }
+    return;
+  };
+  public move = (scene: Phaser.Scene) => {
     const cursorKeys = scene.input.keyboard.createCursorKeys();
     const player = this.model.body;
     const position: Coordinate = { x: player.x, y: player.y };

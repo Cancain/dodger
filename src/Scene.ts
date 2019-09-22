@@ -37,6 +37,10 @@ export default class GameScene extends Phaser.Scene {
     return bounds;
   };
 
+  public bullet: Phaser.GameObjects.Rectangle & {
+    body: Phaser.Physics.Arcade.Body;
+  };
+
   public create() {
     this.playerCharacter.model = this.add.rectangle(
       100,
@@ -49,7 +53,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   public update() {
-    this.playerCharacter.movement(this);
+    this.playerCharacter.move(this);
+    this.bullet = this.playerCharacter.shoot(this);
   }
 
   public getSize = () => {
