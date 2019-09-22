@@ -61,7 +61,6 @@ export class GameScene extends Phaser.Scene {
     } else {
       player.body.setVelocityX(0);
     }
-    console.log(this.oob.right);
 
     if (player.body.y > window.innerHeight - this.playerRadius) {
       this.oob.down = true;
@@ -76,12 +75,12 @@ export class GameScene extends Phaser.Scene {
     }
 
     if (player.body.x > window.innerWidth - this.playerRadius) {
-      this.oob.right = false;
+      this.oob.right = true;
     } else {
       this.oob.right = false;
     }
 
-    if (player.body.x < window.innerWidth + this.playerRadius) {
+    if (player.body.x < 0 + this.playerRadius) {
       this.oob.left = true;
     } else {
       this.oob.left = false;
