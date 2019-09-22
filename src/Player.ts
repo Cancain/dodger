@@ -1,4 +1,6 @@
 import * as Phaser from "phaser";
+import { currentScene } from "./Main";
+import { Coordinate } from "./Types";
 
 export default class Player {
   size: number;
@@ -28,16 +30,18 @@ export default class Player {
   public movement = (scene: Phaser.Scene) => {
     const cursorKeys = scene.input.keyboard.createCursorKeys();
     const player = this.model.body;
+    const position: Coordinate = { x: player.x, y: player.y };
+    const bounds = currentScene.isOutOfBounds(position, this.getRadius());
 
-    if (cursorKeys.up.isDown) {
+    if (cursorKeys.up.isDown && !bounds.top) {
       player.setVelocityY(-this.movementSpeed);
-    } else if (cursorKeys.down.isDown) {
+    } else if (cursorKeys.down.isDown && !bounds.bottom) {
       player.setVelocityY(this.movementSpeed);
     } else player.setVelocityY(0);
 
-    if (cursorKeys.left.isDown) {
+    if (cursorKeys.left.isDown && !bounds.left) {
       player.setVelocityX(-this.movementSpeed);
-    } else if (cursorKeys.right.isDown) {
+    } else if (cursorKeys.right.isDown && !bounds.right) {
       player.setVelocityX(this.movementSpeed);
     } else player.setVelocityX(0);
   };

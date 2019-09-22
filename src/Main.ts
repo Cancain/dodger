@@ -1,7 +1,7 @@
 import * as Phaser from "phaser";
 import GameScene from "./Scene";
 
-const currentScene = new GameScene();
+export const currentScene = new GameScene();
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
   title: "myFirstPhaserGame",
