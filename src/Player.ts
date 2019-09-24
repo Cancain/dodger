@@ -1,7 +1,6 @@
 import * as Phaser from "phaser";
 import { currentScene } from "./Main";
 import { Coordinate } from "./Types";
-import { setInterval } from "timers";
 
 export default class Player {
   size: number;
@@ -30,9 +29,7 @@ export default class Player {
 
   public shoot = (scene: Phaser.Scene) => {
     const player = this.model.body;
-    const shootButton = scene.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+    const shootButton = scene.input.activePointer;
 
     const startPos: Coordinate = { x: player.x, y: player.y };
 
@@ -53,7 +50,13 @@ export default class Player {
     return;
   };
   public move = (scene: Phaser.Scene) => {
-    const cursorKeys = scene.input.keyboard.createCursorKeys();
+    // const cursorKeys = scene.input.keyboard.createCursorKeys();
+    const cursorKeys = {
+      up: scene.input.keyboard.addKey("W"),
+      down: scene.input.keyboard.addKey("S"),
+      left: scene.input.keyboard.addKey("A"),
+      right: scene.input.keyboard.addKey("D")
+    };
     const player = this.model.body;
     const position: Coordinate = { x: player.x, y: player.y };
     const bounds = currentScene.isOutOfBounds(position, this.getRadius());
