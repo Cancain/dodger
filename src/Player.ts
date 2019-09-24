@@ -1,35 +1,41 @@
 import * as Phaser from "phaser";
 import { currentScene } from "./Main";
 import { Coordinate } from "./Types";
+import Projectile from "./Projectile";
 
 export default class Player {
-  size: number;
-  movementSpeed: number;
-
-  constructor() {
-    this.size = 10;
-    this.movementSpeed = 1100;
+  scene: Phaser.Scene;
+  constructor(scene: Phaser.Scene) {
+    this.scene = scene;
   }
 
-  public model: Phaser.GameObjects.Rectangle & {
+  size = 10;
+  movementSpeed = 500;
+
+  model: Phaser.GameObjects.Rectangle & {
     body: Phaser.Physics.Arcade.Body;
   };
 
-  public getSize = () => {
+  getSize = () => {
     return this.size;
   };
 
-  public getRadius = () => {
+  getRadius = () => {
     return this.size * 2;
   };
 
-  public getMovementSpeed = () => {
+  getMovementSpeed = () => {
     return this.movementSpeed;
   };
 
-  public movement = (scene: Phaser.Scene) => {
-    const cursorKeys = scene.input.keyboard.createCursorKeys();
+  movement = () => {
     const player = this.model.body;
+    const cursorKeys = {
+      up: this.scene.input.keyboard.addKey("W"),
+      down: this.scene.input.keyboard.addKey("S"),
+      left: this.scene.input.keyboard.addKey("A"),
+      right: this.scene.input.keyboard.addKey("D")
+    };
     const position: Coordinate = { x: player.x, y: player.y };
     const bounds = currentScene.isOutOfBounds(position, this.getRadius());
 
@@ -44,5 +50,21 @@ export default class Player {
     } else if (cursorKeys.right.isDown && !bounds.right) {
       player.setVelocityX(this.movementSpeed);
     } else player.setVelocityX(0);
+  };
+
+  shooting = () => {
+    const player = this.model.body;
+    const pointer = this.scene.input.activePointer;
+    const projectile = new Projectile();
+    const position: Coordinate = { x: player.x, y: player.y };
+
+    if (pointer.isDown) {
+      projectile.shoot(this.scene, position, pointer);
+    }
+  };
+
+  activate = () => {
+    this.movement();
+    this.shooting();
   };
 }

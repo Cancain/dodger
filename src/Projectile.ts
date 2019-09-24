@@ -1,0 +1,29 @@
+import * as Phaser from "phaser";
+import { Coordinate } from "./Types";
+
+export default class Projectile {
+  width = 5;
+  height = 5;
+  movementSpeed = 950;
+  color = 0xffffff;
+
+  model: Phaser.GameObjects.Rectangle & {
+    body: Phaser.Physics.Arcade.Body;
+  };
+
+  shoot = (scene: Phaser.Scene, startPos: Coordinate, pointer: any) => {
+    this.model = scene.add.rectangle(
+      startPos.x,
+      startPos.y,
+      this.width,
+      this.height,
+      this.color
+    ) as any;
+
+    const bullet = this.model.body;
+
+    scene.physics.add.existing(this.model);
+    scene.physics.moveToObject(this.model, pointer, 700);
+    return bullet;
+  };
+}

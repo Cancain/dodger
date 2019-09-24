@@ -18,7 +18,7 @@ export default class GameScene extends Phaser.Scene {
     this.height = 768;
   }
 
-  playerCharacter = new Player();
+  playerCharacter = new Player(this);
 
   public isOutOfBounds = (position: Coordinate, size: number) => {
     let bounds: Bounds = {
@@ -49,7 +49,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   public update() {
-    this.playerCharacter.movement(this);
+    this.playerCharacter.activate();
   }
 
   public getSize = () => {
