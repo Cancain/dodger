@@ -1,15 +1,16 @@
 import * as Phaser from "phaser";
 import { currentScene } from "./Main";
 import { Coordinate } from "./Types";
+import Projectile from "./Projectile";
 
 export default class Player {
-  size: number;
-  movementSpeed: number;
-  shootButton: Phaser.Input.Keyboard.Key;
-  constructor() {
-    this.size = 10;
-    this.movementSpeed = 500;
+  scene: Phaser.Scene;
+  constructor(scene: Phaser.Scene) {
+    this.scene = scene;
   }
+
+  size = 10;
+  movementSpeed = 500;
 
   model: Phaser.GameObjects.Rectangle & {
     body: Phaser.Physics.Arcade.Body;
@@ -27,36 +28,14 @@ export default class Player {
     return this.movementSpeed;
   };
 
-  shoot = (scene: Phaser.Scene) => {
+  movement = () => {
     const player = this.model.body;
-    const pointer = scene.input.activePointer;
-
-    const startPos: Coordinate = { x: player.x, y: player.y };
-
-    if (pointer.isDown) {
-      let bullet = scene.add.rectangle(
-        startPos.x,
-        startPos.y,
-        10,
-        10,
-        0xffffff
-      ) as any;
-
-      scene.physics.add.existing(bullet);
-      // bullet.body.setVelocityX(1000);
-      scene.physics.moveToObject(bullet, pointer, 700);
-      return bullet;
-    }
-    return;
-  };
-  move = (scene: Phaser.Scene) => {
     const cursorKeys = {
-      up: scene.input.keyboard.addKey("W"),
-      down: scene.input.keyboard.addKey("S"),
-      left: scene.input.keyboard.addKey("A"),
-      right: scene.input.keyboard.addKey("D")
+      up: this.scene.input.keyboard.addKey("W"),
+      down: this.scene.input.keyboard.addKey("S"),
+      left: this.scene.input.keyboard.addKey("A"),
+      right: this.scene.input.keyboard.addKey("D")
     };
-    const player = this.model.body;
     const position: Coordinate = { x: player.x, y: player.y };
     const bounds = currentScene.isOutOfBounds(position, this.getRadius());
 
@@ -71,5 +50,21 @@ export default class Player {
     } else if (cursorKeys.right.isDown && !bounds.right) {
       player.setVelocityX(this.movementSpeed);
     } else player.setVelocityX(0);
+  };
+
+  shooting = () => {
+    const player = this.model.body;
+    const pointer = this.scene.input.activePointer;
+    const projectile = new Projectile();
+    const position: Coordinate = { x: player.x, y: player.y };
+
+    if (pointer.isDown) {
+      projectile.shoot(this.scene, position, pointer);
+    }
+  };
+
+  activate = () => {
+    this.movement();
+    this.shooting();
   };
 }
