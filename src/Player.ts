@@ -11,29 +11,29 @@ export default class Player {
     this.movementSpeed = 500;
   }
 
-  public model: Phaser.GameObjects.Rectangle & {
+  model: Phaser.GameObjects.Rectangle & {
     body: Phaser.Physics.Arcade.Body;
   };
 
-  public getSize = () => {
+  getSize = () => {
     return this.size;
   };
 
-  public getRadius = () => {
+  getRadius = () => {
     return this.size * 2;
   };
 
-  public getMovementSpeed = () => {
+  getMovementSpeed = () => {
     return this.movementSpeed;
   };
 
-  public shoot = (scene: Phaser.Scene) => {
+  shoot = (scene: Phaser.Scene) => {
     const player = this.model.body;
-    const shootButton = scene.input.activePointer;
+    const pointer = scene.input.activePointer;
 
     const startPos: Coordinate = { x: player.x, y: player.y };
 
-    if (shootButton.isDown) {
+    if (pointer.isDown) {
       let bullet = scene.add.rectangle(
         startPos.x,
         startPos.y,
@@ -43,14 +43,13 @@ export default class Player {
       ) as any;
 
       scene.physics.add.existing(bullet);
-      bullet.body.setVelocityX(1000);
-
+      // bullet.body.setVelocityX(1000);
+      scene.physics.moveToObject(bullet, pointer, 700);
       return bullet;
     }
     return;
   };
-  public move = (scene: Phaser.Scene) => {
-    // const cursorKeys = scene.input.keyboard.createCursorKeys();
+  move = (scene: Phaser.Scene) => {
     const cursorKeys = {
       up: scene.input.keyboard.addKey("W"),
       down: scene.input.keyboard.addKey("S"),
