@@ -1,4 +1,3 @@
-import * as Phaser from "phaser";
 import GameScene from "./Scene";
 
 export const currentScene = new GameScene();
