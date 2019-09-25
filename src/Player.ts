@@ -1,7 +1,7 @@
 import { Scene, GameObjects } from "phaser";
 import { currentScene } from "./Main";
 import { Coordinate } from "./Types";
-import Projectile from "./Projectile";
+import Pistol from "./Pistol";
 
 export default class Player {
   scene: Scene;
@@ -55,7 +55,7 @@ export default class Player {
   shooting = () => {
     const player = this.model.body;
     const pointer = this.scene.input.activePointer;
-    const projectile = new Projectile();
+    const projectile = new Pistol();
     const position: Coordinate = { x: player.x, y: player.y };
 
     if (pointer.isDown) {
