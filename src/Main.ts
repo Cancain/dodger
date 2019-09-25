@@ -1,10 +1,9 @@
-import * as Phaser from "phaser";
 import GameScene from "./Scene";
 
 export const currentScene = new GameScene();
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
-  title: "myFirstPhaserGame",
+  title: "Dodger",
   type: Phaser.AUTO,
   width: currentScene.getSize().width,
   height: currentScene.getSize().height,

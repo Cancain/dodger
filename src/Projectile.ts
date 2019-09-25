@@ -1,17 +1,18 @@
-import * as Phaser from "phaser";
+import { GameObjects, Scene } from "phaser";
 import { Coordinate } from "./Types";
+import { Projectile } from "./Interfaces";
 
-export default class Projectile {
+export default class Pistol implements Projectile {
   width = 5;
   height = 5;
   movementSpeed = 950;
   color = 0xffffff;
 
-  model: Phaser.GameObjects.Rectangle & {
+  model: GameObjects.Rectangle & {
     body: Phaser.Physics.Arcade.Body;
   };
 
-  shoot = (scene: Phaser.Scene, startPos: Coordinate, pointer: any) => {
+  shoot = (scene: Scene, startPos: Coordinate, pointer: any) => {
     this.model = scene.add.rectangle(
       startPos.x,
       startPos.y,

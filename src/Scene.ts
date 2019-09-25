@@ -1,14 +1,14 @@
-import * as Phaser from "phaser";
+import { Scene, Types } from "phaser";
 import Player from "./Player";
 import { Coordinate, Bounds } from "./Types";
 
-const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
+const sceneConfig: Types.Scenes.SettingsConfig = {
   active: false,
   visible: false,
   key: "Game"
 };
 
-export default class GameScene extends Phaser.Scene {
+export default class GameScene extends Scene {
   width: number;
   height: number;
 

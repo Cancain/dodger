@@ -1,18 +1,18 @@
-import * as Phaser from "phaser";
+import { Scene, GameObjects } from "phaser";
 import { currentScene } from "./Main";
 import { Coordinate } from "./Types";
 import Projectile from "./Projectile";
 
 export default class Player {
-  scene: Phaser.Scene;
-  constructor(scene: Phaser.Scene) {
+  scene: Scene;
+  constructor(scene: Scene) {
     this.scene = scene;
   }
 
   size = 10;
   movementSpeed = 500;
 
-  model: Phaser.GameObjects.Rectangle & {
+  model: GameObjects.Rectangle & {
     body: Phaser.Physics.Arcade.Body;
   };
 
