@@ -25,6 +25,7 @@ export default class Pistol implements Projectile {
 
     scene.physics.add.existing(this.model);
     scene.physics.moveToObject(this.model, pointer, 700);
+
     return bullet;
   };
 }
