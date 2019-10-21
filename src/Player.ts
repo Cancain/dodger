@@ -1,10 +1,12 @@
-import { Scene, GameObjects } from "phaser";
+import { Scene, GameObjects, Time } from "phaser";
 import { currentScene } from "./Main";
 import { Coordinate } from "./Types";
 import Pistol from "./Pistol";
 
 export default class Player {
   scene: Scene;
+  timer: Time.TimerEvent;
+  onCooldown = false;
   constructor(scene: Scene) {
     this.scene = scene;
   }
@@ -58,13 +60,24 @@ export default class Player {
     const projectile = new Pistol();
     const position: Coordinate = { x: player.x, y: player.y };
 
-    if (pointer.isDown) {
+    if (pointer.isDown && !this.onCooldown) {
       projectile.shoot(this.scene, position, pointer);
+      this.onCooldown = true;
     }
   };
 
   activate = () => {
     this.movement();
     this.shooting();
+  };
+
+  cooldown = (scene: Phaser.Scene) => {
+    if (!this.onCooldown) this.timer.remove(false);
+    this.timer = scene.time.addEvent({
+      delay: 500,
+      loop: false
+    });
+    this.onCooldown = false;
+    console.log("here");
   };
 }

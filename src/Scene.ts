@@ -50,6 +50,9 @@ export default class GameScene extends Scene {
 
   public update() {
     this.playerCharacter.activate();
+    if (this.playerCharacter.onCooldown) {
+      this.playerCharacter.cooldown(this);
+    }
   }
 
   public getSize = () => {
