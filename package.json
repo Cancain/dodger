@@ -4,12 +4,12 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
-    "copy-webpack-plugin": "^5.0.4",
-    "phaser": "^3.19.0",
-    "ts-loader": "^6.1.2",
+    "copy-webpack-plugin": "^11.0.0",
+    "phaser": "^3.55.2",
+    "ts-loader": "^9.4.2",
     "typescript": "^3.6.3",
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^3.8.1"
   },
   "devDependencies": {},
